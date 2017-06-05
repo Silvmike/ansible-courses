@@ -1,0 +1,21 @@
+- hosts: all
+  gather_facts: False
+
+  vars:
+     file_name: /home/ubuntu/test.txt
+     template: Secret key is ASDF
+
+  tasks:
+      - name: Create a file
+        copy:
+          content: tempalte
+          dest: "{{file_name}}"
+
+    - name: Check file
+      stat:
+        path: file_name
+      register: result
+
+    - assert:
+       that:
+         - 'result.md5 == "1c32be529767f993475ce78579848c89"

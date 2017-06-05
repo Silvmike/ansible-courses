@@ -1,0 +1,28 @@
+
+- hosts: localhost
+  gather_facts: False
+
+  vars:
+    instance_name: user03machine
+  tasks:
+    - name: create ec2 instances
+      ec2:
+        key_name: ansible-2017-jun
+        instance_type: t2.micro
+        image: ami-ed82e39e
+        wait: yes
+        region: eu-west-1
+        instance_tags:
+          Name: "{{instance_name}}"
+        exact_count: 1
+        count_tag:
+          Name: "{{instance_name}}"
+        group: ansible-2017-jun
+        vpc_subnet_id: subnet-01970077
+        assign_public_ip: yes
+      register: ec2_facts
+
+    - name: Show ip
+      debug:
+        msg: "{{(ec2_facts.tagged_instances | first).public_ip}}"
+      when: "{{ (ec2_facts.tagged_instances | first) is defined }}"

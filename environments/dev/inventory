@@ -1,0 +1,3 @@
+user03machine ansible_host=52.212.135.118 ansible_user=ubuntu ansible_private_key_file=id_rsa_ansible-2017-jun
+
+

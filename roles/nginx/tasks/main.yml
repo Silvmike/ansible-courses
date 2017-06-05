@@ -2,7 +2,12 @@
 - name: update apt
   apt: update_cache=yes
 
-- name: install nginx
+- name: |
+    # Install nginx
+
+    And right now!
+
+    Please :)
   apt: name=nginx state=present
 
 - name: enable nginx

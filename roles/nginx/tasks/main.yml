@@ -10,6 +10,18 @@
     Please :)
   apt: name=nginx state=present
 
+- name: configure nginx
+  template: src=default.j2 dest=/etc/nginx/sites-enabled/default
+  notify: restart nginx
+
 - name: enable nginx
   service: name=nginx state=started enabled=yes
 
+- name: make folder for app
+  file: path=/srv/web state=directory
+
+- name: create index page
+  template: src=index.html.j2 dest=/srv/web/index.html
+
+- name: create page for countries
+  template: src=countries.html.j2 dest=/srv/web/countries.html

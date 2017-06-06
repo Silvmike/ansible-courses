@@ -23,4 +23,4 @@ tomcat_port_connector: 8080
 tomcat_users:
   - name: tomcat
     password: tomcat
-    roles: "manager-gui,admin-gui"
+    roles: "admin,manager,manager-script,admin-script,admin-gui,manager-gui"

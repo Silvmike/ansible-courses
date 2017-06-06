@@ -4,3 +4,31 @@
 
 - hosts: web
   become: true
+
+  tasks:
+    - name: 'Copy database schema file'
+      copy:
+        src: ../files/petstore-schema.sql
+        dest: /var/lib/postgresql/petstore-schema.sql
+        owner: postgres
+        group: postgres
+        mode: 0600
+
+    - name: 'Copy database data file'
+      copy:
+        src: ../files/petstore-data.sql
+        dest: /var/lib/postgresql/petstore-data.sql
+        owner: postgres
+        group: postgres
+        mode: 0600
+
+    - name: 'Load data into database'
+      shell: psql -f {{item}} application && touch {{item}}.lock
+      args:
+        chdir: /var/lib/postgresql
+        creates: "{{item}}.lock"
+      become: yes
+      become_user: postgres
+      with_items:
+        - petstore-schema.sql
+        - petstore-data.sql

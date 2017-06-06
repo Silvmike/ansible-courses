@@ -1,9 +1,10 @@
 
 - hosts: localhost
-  gather_facts: False
+  gather_facts: True
 
   vars:
     instance_name: user03machine
+    lb_name: user03lb
   tasks:
     - name: create ec2 instances
       ec2:
@@ -24,5 +25,32 @@
 
     - name: Show ip
       debug:
-        msg: "{{(ec2_facts.tagged_instances | first).public_ip}}"
-      when: "{{ (ec2_facts.tagged_instances | first) is defined }}"
+        msg: "{{ec2_facts}}"
+
+    - name: Create load balancer
+      ec2_elb_lb:
+        name: "{{lb_name}}"
+        region: eu-west-1
+        state: present
+        subnets:
+         - subnet-01970077
+        security_group_names:
+         - ansible-mk-sg
+        listeners:
+         - protocol: http
+           load_balancer_port: 80
+           instance_port: 80
+           proxy_protocol: True
+      register: ec2_elb_lb_facts
+
+    - name: Show lb
+      debug:
+        msg: "{{ec2_elb_lb_facts.elb.dns_name}}"
+
+    - name: Add instance to LB
+      ec2_elb:
+        region: eu-west-1
+        instance_id: "{{(ec2_facts.tagged_instances | first).id}}"
+        ec2_elbs:
+        - "{{lb_name}}"
+        state: present

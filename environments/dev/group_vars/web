@@ -26,4 +26,4 @@ tomcat_users:
     roles: "admin,manager,manager-script,admin-script,admin-gui,manager-gui"
 
 tomcat_webapps_dir: /opt/tomcat/webapps
-jpetstore_version: 1
+jpetstore_version: 2

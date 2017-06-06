@@ -4,3 +4,4 @@
 - src: jdauphant.nginx
 - src: ANXS.postgresql
 - src: ChristopherDavenport.universal-tomcat
+- src: dj-wasabi.zabbix-agent

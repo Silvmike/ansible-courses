@@ -1,0 +1,34 @@
+- hosts: web
+  become: yes
+
+  roles:
+  - role: dj-wasabi.zabbix-agent
+    agent_server: "{{zabbix_server}}"
+    agent_serveractive: "{{zabbix_server}}"
+
+  tasks:
+  - name: Install python-pip
+    apt:
+      name: python-pip
+
+  - name: Install zabbix-api
+    pip:
+      name: zabbix-api
+
+  - name: Setup zabbix host in server
+    zabbix_host:
+      host_groups:
+        - "Linux servers"
+      host_name: "{{ inventory_hostname }}"
+      login_user: Admin
+      login_password: zabbix
+      server_url: "http://{{zabbix_server}}/zabbix/api_jsonrpc.php"
+      link_templates:
+      - Template OS Linux
+      interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: "{{ ansible_all_ipv4_addresses | first }}"
+        dns: ""
+        port: 10050

@@ -1,4 +1,4 @@
-iptables_allowed_tcp_ports: [22,80]
+iptables_allowed_tcp_ports: [22,80,10050]
 nginx_sites:
   default:
     - listen 80

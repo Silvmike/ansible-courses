@@ -1,0 +1,9 @@
+- hosts: web
+  gather_facts: False
+  become: True
+
+  tasks:
+    - name: Copy release to tomcat webapps directory
+      get_url:
+        url: "http://storage.express42.io/jpetstore%23%23{{jpetstore_version}}.war"
+        dest: "{{tomcat_webapps_dir}}/jpetstore##{{jpetstore_version}}.war"

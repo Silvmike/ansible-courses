@@ -1,5 +1,6 @@
 - include: base.yml
 - include: service.yml
+- include: app.yml
 
 - hosts: web
   become: true

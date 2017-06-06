@@ -3,6 +3,10 @@ nginx_sites:
   default:
     - listen 80
     - server_name "localhost"
+    - location / {
+        client_max_body_size 32M;
+        proxy_pass http://127.0.0.1:8080;
+      }
 
 postgresql_version: 9.5
 postgresql_users:
@@ -13,3 +17,10 @@ postgresql_users:
 postgresql_databases:
   - name: application
     owner: appuser
+
+tomcat_version: "7.0.76"
+tomcat_port_connector: 8080
+tomcat_users:
+  - name: tomcat
+    password: tomcat
+    roles: "manager-gui,admin-gui"

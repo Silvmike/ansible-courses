@@ -1,0 +1,9 @@
+- hosts: web
+  gather_facts: False
+  become: True
+
+  tasks:
+    - name: Delete release from tomcat
+      file:
+        path: "{{tomcat_webapps_dir}}/jpetstore##{{jpetstore_version}}.war"
+        state: absent

@@ -4,3 +4,4 @@ id_rsa_ansible-2017-jun.pub
 .ansible-retry
 roles/Stouts.iptables
 roles/jdauphant.nginx
+roles/ANXS.postgresql

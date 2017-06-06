@@ -3,3 +3,13 @@ nginx_sites:
   default:
     - listen 80
     - server_name "localhost"
+
+postgresql_version: 9.5
+postgresql_users:
+  - name: appuser
+    pass: password
+    encrypted: no
+
+postgresql_databases:
+  - name: application
+    owner: appuser
